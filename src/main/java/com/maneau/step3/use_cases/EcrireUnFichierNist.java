@@ -1,6 +1,8 @@
 package com.maneau.step3.use_cases;
 
-import com.maneau.step3.entities.NistFile;
+import com.maneau.step3.entities.file.NistFileImpl;
+import com.maneau.step3.use_cases.helpers.serializers.NistRecord1Serializer;
+import com.maneau.step3.use_cases.helpers.serializers.NistRecord2Serializer;
 import lombok.NonNull;
 
 import java.io.IOException;
@@ -9,10 +11,13 @@ import java.nio.charset.StandardCharsets;
 
 public class EcrireUnFichierNist {
 
-    public void executer(@NonNull OutputStream os, NistFile nistFile) throws IOException {
-        os.write(nistFile.getRecord1().toString().getBytes(StandardCharsets.UTF_8));
+    NistRecord1Serializer record1Serializer = new NistRecord1Serializer();
+    NistRecord2Serializer record2Serializer = new NistRecord2Serializer();
+
+    public void executer(@NonNull OutputStream os, NistFileImpl nistFileImpl) throws IOException {
+        os.write(record1Serializer.write(nistFileImpl.getRecord1()).getBytes(StandardCharsets.UTF_8));
         os.write("#".getBytes(StandardCharsets.UTF_8));
-        os.write(nistFile.getRecord2().toString().getBytes(StandardCharsets.UTF_8));
+        os.write(record2Serializer.write(nistFileImpl.getRecord2()).getBytes(StandardCharsets.UTF_8));
     }
 
 }

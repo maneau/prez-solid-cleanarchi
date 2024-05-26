@@ -1,10 +1,9 @@
 package com.maneau.step4.use_cases;
 
-import com.maneau.step4.entities.NistFile;
-import com.maneau.step4.entities.Record1;
-import com.maneau.step4.entities.Record2;
-import com.maneau.step4.use_cases.helpers.builders.Record1Builder;
-import com.maneau.step4.use_cases.helpers.builders.Record2Builder;
+import com.maneau.step4.entities.file.NistFileImpl;
+import com.maneau.step4.entities.records.NistRecord;
+import com.maneau.step4.use_cases.helpers.builders.Record1BuilderImpl;
+import com.maneau.step4.use_cases.helpers.builders.Record2BuilderImpl;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -13,29 +12,29 @@ import java.nio.charset.StandardCharsets;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class EcrireUnFichierNistTest {
-    EcrireUnFichierNist ecrireUnFichierNist = new EcrireUnFichierNist();
+    com.maneau.step4.use_cases.EcrireUnFichierNist ecrireUnFichierNist = new EcrireUnFichierNist();
 
     @Test
     void ecrireUnFichierNist_devrait_ecrire() throws Exception {
         //Given
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        Record1 record1 = new Record1Builder()
+        NistRecord record1 = new Record1BuilderImpl()
                 .withField(1, "field 11")
                 .withField(2, "field 12")
                 .build();
 
-        Record2 record2 = new Record2Builder()
+        NistRecord record2 = new Record2BuilderImpl()
                 .withField(1, "field 21")
                 .withField(2, "field 22")
                 .build();
 
-        NistFile nistFile = NistFile.builder()
+        NistFileImpl nistFileImpl = NistFileImpl.builder()
                 .record1(record1)
                 .record2(record2)
                 .build();
 
         //When
-        ecrireUnFichierNist.executer(outputStream, nistFile);
+        ecrireUnFichierNist.executer(outputStream, nistFileImpl);
 
         //Then
         String value = outputStream.toString(StandardCharsets.UTF_8);

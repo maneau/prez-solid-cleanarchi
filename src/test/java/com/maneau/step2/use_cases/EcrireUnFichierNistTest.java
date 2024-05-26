@@ -1,9 +1,10 @@
-package com.maneau.step3.use_cases;
+package com.maneau.step2.use_cases;
 
-import com.maneau.step3.entities.file.NistFileImpl;
-import com.maneau.step3.entities.records.NistRecord;
-import com.maneau.step3.use_cases.helpers.builders.NistRecord1BuilderImpl;
-import com.maneau.step3.use_cases.helpers.builders.NistRecord2BuilderImpl;
+import com.maneau.step2.entities.NistFile;
+import com.maneau.step2.entities.Record1;
+import com.maneau.step2.entities.Record2;
+import com.maneau.step2.use_cases.helpers.builders.Record1Builder;
+import com.maneau.step2.use_cases.helpers.builders.Record2Builder;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -12,29 +13,29 @@ import java.nio.charset.StandardCharsets;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class EcrireUnFichierNistTest {
-    com.maneau.step3.use_cases.EcrireUnFichierNist ecrireUnFichierNist = new EcrireUnFichierNist();
+    EcrireUnFichierNist ecrireUnFichierNist = new EcrireUnFichierNist();
 
     @Test
     void ecrireUnFichierNist_devrait_ecrire() throws Exception {
         //Given
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        NistRecord record1 = new NistRecord1BuilderImpl()
+        Record1 record1 = new Record1Builder()
                 .withField(1, "field 11")
                 .withField(2, "field 12")
                 .build();
 
-        NistRecord record2 = new NistRecord2BuilderImpl()
+        Record2 record2 = new Record2Builder()
                 .withField(1, "field 21")
                 .withField(2, "field 22")
                 .build();
 
-        NistFileImpl nistFileImpl = NistFileImpl.builder()
+        NistFile nistFile = NistFile.builder()
                 .record1(record1)
                 .record2(record2)
                 .build();
 
         //When
-        ecrireUnFichierNist.executer(outputStream, nistFileImpl);
+        ecrireUnFichierNist.executer(outputStream, nistFile);
 
         //Then
         String value = outputStream.toString(StandardCharsets.UTF_8);
