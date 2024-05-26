@@ -1,13 +1,14 @@
 package com.maneau.step4.use_cases;
 
-import com.maneau.step3.entities.records.NistRecord;
-import com.maneau.step3.use_cases.helpers.builders.NistRecord1BuilderImpl;
+import com.maneau.step4.entities.records.NistRecord;
+import com.maneau.step4.use_cases.helpers.builders.NistRecord1BuilderImpl;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class NistRecordBuilderTest {
+
     @Test
     void NistRecord_should_be_immutable() {
         // Given
@@ -23,20 +24,24 @@ public class NistRecordBuilderTest {
     }
 
     @Test
-    void from_should_create_mutable() {
+    void from_should_permit_create_another_version() {
         // Given
         NistRecord recordOriginal = new NistRecord1BuilderImpl()
                 .withField(1, "test 1")
                 .withField(2, "test 2")
                 .build();
 
+        // When
         NistRecord recordModify = new NistRecord1BuilderImpl().from(recordOriginal)
                 .withField(1, "new val on test 1")
                 .withField(3, "test 3")
                 .build();
 
-        // When
         // Then
+        assertThat(recordOriginal.getFields().get(1)).isEqualTo("test 1");
+        assertThat(recordOriginal.getFields().get(2)).isEqualTo("test 2");
+        assertThat(recordOriginal.getFields().get(3)).isNull();
+
         assertThat(recordModify.getFields().get(3)).isEqualTo("test 3");
         assertThat(recordModify.getFields().get(2)).isEqualTo("test 2");
         assertThat(recordModify.getFields().get(1)).isEqualTo("new val on test 1");

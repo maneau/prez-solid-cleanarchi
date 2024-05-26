@@ -1,4 +1,4 @@
-package com.maneau.step3.entities.records;
+package com.maneau.step4.entities.records;
 
 public class NistRecordImmutable2Impl
         extends AbstractRecordImmutable

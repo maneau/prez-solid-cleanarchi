@@ -1,26 +1,21 @@
 package com.maneau.step3.use_cases.helpers.builders;
 
-import com.maneau.step3.entities.Callback;
 import com.maneau.step3.entities.records.NistRecord;
 import com.maneau.step3.entities.records.NistRecordBuilder;
 import lombok.Getter;
-import lombok.Setter;
 
-import java.util.*;
+import java.util.Map;
+import java.util.TreeMap;
 
 public abstract class AbstractNistRecordBuilder implements NistRecordBuilder {
 
     @Getter
-    @Setter
-    private Map<Integer, String> fields;
-
-    protected List<Callback<NistRecordBuilder>> beforeBuildCallbacks;
+    private final Map<Integer, String> fields;
 
     public abstract NistRecord build();
 
     AbstractNistRecordBuilder() {
-        this.fields = new TreeMap<>();
-        this.beforeBuildCallbacks = new ArrayList<>();
+      this.fields = new TreeMap<>();
     }
 
     public NistRecordBuilder withField(Integer key, String value) {
@@ -29,16 +24,4 @@ public abstract class AbstractNistRecordBuilder implements NistRecordBuilder {
     }
 
     public abstract NistRecordBuilder newBuilder();
-
-    public NistRecordBuilder from(NistRecord immutableRecord) {
-        NistRecordBuilder builder = newBuilder();
-        Map<Integer, String> mutableFields = new HashMap<>(immutableRecord.getFields());
-        builder.setFields(mutableFields);
-        return builder;
-    }
-
-    public NistRecordBuilder withBeforeBuild(Callback<NistRecordBuilder> callback) {
-        this.beforeBuildCallbacks.add(callback);
-        return this;
-    }
 }

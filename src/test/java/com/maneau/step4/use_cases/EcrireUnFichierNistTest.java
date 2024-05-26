@@ -2,8 +2,8 @@ package com.maneau.step4.use_cases;
 
 import com.maneau.step4.entities.file.NistFileImpl;
 import com.maneau.step4.entities.records.NistRecord;
-import com.maneau.step4.use_cases.helpers.builders.Record1BuilderImpl;
-import com.maneau.step4.use_cases.helpers.builders.Record2BuilderImpl;
+import com.maneau.step4.use_cases.helpers.builders.NistRecord1BuilderImpl;
+import com.maneau.step4.use_cases.helpers.builders.NistRecord2BuilderImpl;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -18,12 +18,12 @@ class EcrireUnFichierNistTest {
     void ecrireUnFichierNist_devrait_ecrire() throws Exception {
         //Given
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        NistRecord record1 = new Record1BuilderImpl()
+        NistRecord record1 = new NistRecord1BuilderImpl()
                 .withField(1, "field 11")
                 .withField(2, "field 12")
                 .build();
 
-        NistRecord record2 = new Record2BuilderImpl()
+        NistRecord record2 = new NistRecord2BuilderImpl()
                 .withField(1, "field 21")
                 .withField(2, "field 22")
                 .build();
